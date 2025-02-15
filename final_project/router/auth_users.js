@@ -5,56 +5,45 @@ const regd_users = express.Router();
 
 let users = [];
 
-const isValid = (username)=>{ //returns boolean
-//write code to check is the username is valid
+const isValid = (username) => {
+    return users.some(user => user.username === username);
 }
 
-const authenticatedUser = (username,password)=>{ //returns boolean
-//write code to check if username and password match the one we have in records.
+const authenticatedUser = (username, password) => {
+    return users.some(user => user.username === username && user.password === password);
 }
 
-//only registered users can login
+// Login de usuario
 regd_users.post("/login", (req, res) => {
-    let { username, password } = req.body; 
+    let { username, password } = req.body;
 
-    // Validar que ambos campos estén presentes
     if (!username || !password) {
         return res.status(400).json({ message: "Username and password are required" });
     }
 
-    // Verificar si el usuario existe en el array `users`
-    let user = users.find(u => u.username === username && u.password === password);
-    if (!user) {
+    if (!authenticatedUser(username, password)) {
         return res.status(401).json({ message: "Invalid username or password" });
     }
 
-    // Crear un token JWT con una clave secreta
     let accessToken = jwt.sign({ username }, "access", { expiresIn: "1h" });
 
-    req.session.username = username;
-
+    req.session.authorization = { accessToken, username };
+    
     return res.status(200).json({ message: "Login successful", accessToken });
 });
 
-
-
-
-// Add a book review
+// Agregar o modificar una reseña de un libro
 regd_users.put("/auth/review/:isbn", (req, res) => {
-    console.log("🔍 Intentando agregar/modificar una reseña...");
-    console.log("SESSION DATA:", req.session);
-
     let isbn = req.params.isbn;
     let { review } = req.body;
-    let username = req.session.username;
 
-    if (!username) {
-        console.log("⚠️ Usuario no autenticado.");
+    if (!req.session.authorization || !req.session.authorization.username) {
         return res.status(401).json({ message: "User not logged in" });
     }
 
+    let username = req.session.authorization.username;
+
     if (!books[isbn]) {
-        console.log("⚠️ Libro no encontrado.");
         return res.status(404).json({ message: "Book not found" });
     }
 
@@ -63,17 +52,30 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
     }
 
     books[isbn].reviews[username] = review;
-    console.log("✅ Reseña añadida/modificada con éxito.");
 
     return res.status(200).json({ message: "Review added/updated successfully", reviews: books[isbn].reviews });
 });
 
+// Eliminar una reseña de un libro
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+    let isbn = req.params.isbn;
 
+    if (!req.session.authorization || !req.session.authorization.username) {
+        return res.status(401).json({ message: "User not logged in" });
+    }
 
+    let username = req.session.authorization.username;
 
+    if (!books[isbn] || !books[isbn].reviews || !books[isbn].reviews[username]) {
+        return res.status(404).json({ message: "Review not found for this user and book" });
+    }
 
+    delete books[isbn].reviews[username];
 
+    return res.status(200).json({ message: "Review deleted successfully" });
+});
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
 module.exports.users = users;
+
