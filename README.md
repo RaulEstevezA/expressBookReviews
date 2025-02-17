@@ -55,7 +55,7 @@ The **Express Book Reviews API** is a Node.js-based RESTful API that allows user
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/RaulEstevezA/expressBookReviews.git
-   cd expressBookReviews
+   cd expressBookReviews/final_project
    ```
 
 2. **Install dependencies:**
