@@ -35,13 +35,18 @@ The **Express Book Reviews API** is a Node.js-based RESTful API that allows user
 ## Project Structure
 ```
 /expressBookReviews
-│── /router
-│   ├── general.js      # Public routes (GET books, register users)
-│   ├── auth_users.js   # Authenticated routes (login, manage reviews)
-│── booksdb.js          # Book data source
-│── index.js            # Server configuration & route management
-│── package.json        # Dependencies and project metadata
-│── README.md           # Project documentation
+│── /final_project
+│   │── /router
+│   │   ├── auth_users.js       # Authenticated routes (login, manage reviews)
+│   │   ├── booksdb.js          # Book data source
+│   │   ├── general.js          # Public routes (GET books, register users)
+│   │── index.js                # Server configuration & route management
+│   │── package-lock.json       # Auto-generated dependency lock file
+│   │── package.json            # Project dependencies and metadata
+│── .DS_Store                   # macOS system file (can be ignored)
+│── .gitignore                  # Specifies files to ignore in Git
+│── LICENSE                     # License information for the project
+│── README.md                   # Project documentation
 ```
 
 ## Setup & Run the Project
