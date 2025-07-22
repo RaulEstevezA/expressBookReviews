@@ -5,7 +5,7 @@ The **Express Book Reviews API** is a Node.js-based RESTful API that allows user
 
 ## Features
 
-### 📚 Public Endpoints (Accessible by All Users)
+### Public Endpoints (Accessible by All Users)
 - **`GET /`**: Retrieve the full list of available books.
 - **`GET /isbn/:isbn`**: Get book details using the ISBN.
 - **`GET /author/:author`**: Retrieve books by a specific author.
@@ -13,7 +13,7 @@ The **Express Book Reviews API** is a Node.js-based RESTful API that allows user
 - **`GET /review/:isbn`**: View book reviews by ISBN.
 - **`POST /register`**: Register a new user.
 
-### 🔒 Authenticated Endpoints (Requires Login)
+### Authenticated Endpoints (Requires Login)
 - **`POST /customer/login`**: Authenticate a user and start a session.
 - **`PUT /customer/auth/review/:isbn`**: Add or update a review for a book.
 - **`DELETE /customer/auth/review/:isbn`**: Delete a user’s own book review.
@@ -51,7 +51,7 @@ The **Express Book Reviews API** is a Node.js-based RESTful API that allows user
 
 ## Setup & Run the Project
 
-### 📥 Installation
+### Installation
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/RaulEstevezA/expressBookReviews.git
@@ -68,13 +68,13 @@ The **Express Book Reviews API** is a Node.js-based RESTful API that allows user
    npm start
    ```
 
-### 🛠 Testing API Endpoints
+### Testing API Endpoints
 You can test the API using **Postman** or `cURL`. Example request to get all books:
 ```bash
 curl -X GET https://your-server-url/
 ```
 
-### 📌 Example Login Request (Postman or cURL)
+### Example Login Request (Postman or cURL)
 ```bash
 curl -X POST https://your-server-url/customer/login \
      -H "Content-Type: application/json" \
