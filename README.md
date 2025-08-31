@@ -88,4 +88,4 @@ curl -X POST https://your-server-url/customer/login \
 
 ---
 
-This project demonstrates full CRUD operations, authentication handling, and API development using Node.js & Express. 🚀
+This project demonstrates full CRUD operations, authentication handling, and API development using Node.js & Express.
